@@ -79,6 +79,8 @@ A working version of this application is available at: [https://zacniewski.pytho
 
 This demo is hosted on **PythonAnywhere**, which uses **SQLite3** databases. Unlike the free tier on Render, these databases do not expire, ensuring the application remains functional over time.
 
+For more information on how to deploy Django applications on PythonAnywhere, refer to the [official documentation](https://help.pythonanywhere.com/pages/DeployExistingDjangoProject/).
+
 ---
 
 ## Local Development
