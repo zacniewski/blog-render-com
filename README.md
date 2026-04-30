@@ -1,60 +1,104 @@
-### Commands on Python Anywhere
+# Django Blog with History Tracker
 
-```bash
-~ $ pip3.9 install --user pythonanywhere
-Looking in links: /usr/share/pip-wheels
-...
-Successfully built pythonanywhere
-Successfully installed contextlib2-21.6.0 pythonanywhere-0.12.1 schema-0.7.5 shellingham-1.5.4 tabulate-0.9.0 typer-0.12.3
+This is a simple Django-based blog application that includes a custom history tracking system. It is designed to be easily deployable on platforms like **PythonAnywhere** and **Render**.
 
-~ $ pa_autoconfigure_django.py --python=3.10 https://github.com/zacniewski/blog-python-anywhere.git
-< Running API sanity checks >
-...
-pythonanywhere.exceptions.SanityException: 
-Could not find your API token.
-You may need to create it on the Accounts page?
-You will also need to close this console and open a new one once you've done that.
+## Features
+
+- **Blog Management**: Create, edit, and delete blog posts.
+- **History Tracking**: Automatically tracks changes (Creation, Saving, Deletion) to blog posts using Django signals.
+- **Deployment Ready**: Pre-configured for PythonAnywhere and Render.
+
+---
+
+## Project Structure & Configuration
+
+- `blog/`: The main blog application containing models, views, and templates.
+- `history_tracker/`: A dedicated app for tracking changes to models.
+- `mysite/`: Project configuration directory (settings, URLs, WSGI/ASGI).
+- `manage.py`: Django's command-line utility.
+- `requirements.txt`: Python dependencies.
+- `render.yaml`: Configuration for deployment on [Render](https://render.com/).
+- `build.sh`: Build script used by Render for environment setup.
+
+---
+
+## Architecture Overview
+
+### System Diagram
+The following diagram shows the high-level architecture of the application:
+
+```mermaid
+graph TD
+    User((User)) --> WebServer[Web Server / Gunicorn]
+    WebServer --> Django[Django Application]
+    Django --> DB[(Database / SQLite or PostgreSQL)]
+    Django --> Signals[Django Signals]
+    Signals --> HistoryTracker[History Tracker App]
+    HistoryTracker --> DB
 ```
 
-After creating API Token in `Account -> API Token` section:  
-```bash
-~ $ pa_autoconfigure_django.py --python=3.10 https://github.com/zacniewski/blog-python-anywhere.git
-< Running API sanity checks >
-   \
-    ~<:>>>>>>>>>
-Cloning into '/home/zacniewski/zacniewski.pythonanywhere.com'...
-remote: Enumerating objects: 43, done.
-remote: Counting objects: 100% (43/43), done.
-remote: Compressing objects: 100% (35/35), done.
-remote: Total 43 (delta 3), reused 43 (delta 3), pack-reused 0
-Unpacking objects: 100% (43/43), 9.07 KiB | 9.00 KiB/s, done.
-< Creating virtualenv with Python3.10 >
-   \
-    ~<:>>>>>>>>>
-    
-...
+### History Tracking Flow
+The `history_tracker` uses Django's signal system to monitor changes in the `Post` model:
 
- Pip installing -r                                                     |
-| /home/zacniewski/zacniewski.pythonanywhere.com/requirements.txt (this |
-| may take a couple of minutes)      
+```mermaid
+sequenceDiagram
+    participant User
+    participant PostModel as Post Model
+    participant Signals
+    participant Tracker as History Tracker
+    participant DB
 
-...
-
-SystemCheckError: System check identified some issues:
-ERRORS:
-?: (staticfiles.E002) The STATICFILES_DIRS setting should not contain the STATIC_ROOT setting.
-WARNINGS:
-?: (staticfiles.W004) The directory '/home/artur/Desktop/PROJECTS/materials-about-internet-apps-and-www-websites/blog-185ic/static' in the STATICFILES_DIRS setting does not exist.
-?: (staticfiles.W004) The directory '/home/zacniewski/zacniewski.pythonanywhere.com/static' in the STATICFILES_DIRS setting does not exist.
-
+    User->>PostModel: Create/Update/Delete Post
+    PostModel->>DB: Save Changes
+    PostModel->>Signals: post_save / post_delete
+    Signals->>Tracker: Trigger Signal Handler
+    Tracker->>DB: Create Tracker Entry
 ```
 
-After fixing some errors:  
+---
+
+## Deployment on PythonAnywhere
+
+To deploy this project on PythonAnywhere, follow these steps:
+
+### 1. Install PythonAnywhere helper
+Open a bash console on PythonAnywhere and run:
 ```bash
-~ $ pa_autoconfigure_django.py --python=3.10 https://github.com/zacniewski/blog-python-anywhere.git
-< Running API sanity checks >
-  ...
-pythonanywhere.exceptions.SanityException: You already have a webapp for zacniewski.pythonanywhere.com.
-Use the --nuke option if you want to replace it.
-~ $ pa_autoconfigure_django.py --python=3.10 https://github.com/zacniewski/blog-python-anywhere.git --nuke
+pip3 install --user pythonanywhere
 ```
+
+### 2. Configure API Token
+Go to **Account** -> **API Token** and ensure a token is generated.
+
+### 3. Run Autoconfigure Script
+Run the following command, replacing the URL if you are using your own fork:
+```bash
+pa_autoconfigure_django.py --python=3.10 https://github.com/zacniewski/blog-python-anywhere.git
+```
+*Note: If you already have a webapp with the same domain, use the `--nuke` flag to overwrite it:*
+```bash
+pa_autoconfigure_django.py --python=3.10 https://github.com/zacniewski/blog-python-anywhere.git --nuke
+```
+
+---
+
+## Deployment on Render
+
+This project includes a `render.yaml` file for quick deployment:
+
+1. Connect your GitHub repository to Render.
+2. Render will automatically detect `render.yaml` and set up the Web Service and Database.
+3. The `build.sh` script will:
+    - Install dependencies.
+    - Run `collectstatic`.
+    - Apply migrations.
+    - Create a default superuser (`admin1` / `admin123`).
+
+---
+
+## Local Development
+
+1. Clone the repository.
+2. Install dependencies: `pip install -r requirements.txt`.
+3. Run migrations: `python manage.py migrate`.
+4. Start the server: `python manage.py runserver`.
