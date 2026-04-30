@@ -69,6 +69,16 @@ This project includes a `render.yaml` file for quick deployment:
     - Apply migrations.
     - Create a default superuser (`admin1` / `admin123`).
 
+> **Note on Render Databases**: The free tier PostgreSQL databases on Render.com expire after **30 days**. Once the database expires, the Django application will no longer function properly as it won't be able to connect to the database.
+
+---
+
+## Live Demo on PythonAnywhere
+
+A working version of this application is available at: [https://zacniewski.pythonanywhere.com/](https://zacniewski.pythonanywhere.com/)
+
+This demo is hosted on **PythonAnywhere**, which uses **SQLite3** databases. Unlike the free tier on Render, these databases do not expire, ensuring the application remains functional over time.
+
 ---
 
 ## Local Development
