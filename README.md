@@ -1,12 +1,12 @@
 # Django Blog with History Tracker
 
-This is a simple Django-based blog application that includes a custom history tracking system. It is designed to be easily deployable on platforms like **PythonAnywhere** and **Render**.
+This is a simple Django-based blog application that includes a custom history tracking system. It is designed to be easily deployable on **Render**.
 
 ## Features
 
 - **Blog Management**: Create, edit, and delete blog posts.
 - **History Tracking**: Automatically tracks changes (Creation, Saving, Deletion) to blog posts using Django signals.
-- **Deployment Ready**: Pre-configured for PythonAnywhere and Render.
+- **Deployment Ready**: Pre-configured for Render.
 
 ---
 
@@ -53,31 +53,6 @@ sequenceDiagram
     PostModel->>Signals: post_save / post_delete
     Signals->>Tracker: Trigger Signal Handler
     Tracker->>DB: Create Tracker Entry
-```
-
----
-
-## Deployment on PythonAnywhere
-
-To deploy this project on PythonAnywhere, follow these steps:
-
-### 1. Install PythonAnywhere helper
-Open a bash console on PythonAnywhere and run:
-```bash
-pip3 install --user pythonanywhere
-```
-
-### 2. Configure API Token
-Go to **Account** -> **API Token** and ensure a token is generated.
-
-### 3. Run Autoconfigure Script
-Run the following command, replacing the URL if you are using your own fork:
-```bash
-pa_autoconfigure_django.py --python=3.10 https://github.com/zacniewski/blog-python-anywhere.git
-```
-*Note: If you already have a webapp with the same domain, use the `--nuke` flag to overwrite it:*
-```bash
-pa_autoconfigure_django.py --python=3.10 https://github.com/zacniewski/blog-python-anywhere.git --nuke
 ```
 
 ---
