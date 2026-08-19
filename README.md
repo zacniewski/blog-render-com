@@ -1,6 +1,6 @@
 # Django Blog with History Tracker
 
-This is a simple Django-based blog application that includes a custom history tracking system. It is designed to be easily deployable on **Render**.
+This is a simple Django-based blog application that includes a custom history tracking system. It is designed to be easily deployable on **Render.com**.
 
 ## Features
 
@@ -17,7 +17,7 @@ This is a simple Django-based blog application that includes a custom history tr
 - `mysite/`: Project configuration directory (settings, URLs, WSGI/ASGI).
 - `manage.py`: Django's command-line utility.
 - `requirements.txt`: Python dependencies.
-- `render.yaml`: Configuration for deployment on [Render](https://render.com/).
+- `render.yaml`: Configuration for deployment on [Render](https://render.com/docs/deploy-django).
 - `build.sh`: Build script used by Render for environment setup.
 
 ---
@@ -70,16 +70,6 @@ This project includes a `render.yaml` file for quick deployment:
     - Create a default superuser (`admin1` / `admin123`).
 
 > **Note on Render Databases**: The free tier PostgreSQL databases on Render.com expire after **30 days**. Once the database expires, the Django application will no longer function properly as it won't be able to connect to the database.
-
----
-
-## Live Demo on PythonAnywhere
-
-A working version of this application is available at: [https://zacniewski.pythonanywhere.com/](https://zacniewski.pythonanywhere.com/)
-
-This demo is hosted on **PythonAnywhere**, which uses **SQLite3** databases. Unlike the free tier on Render, these databases do not expire, ensuring the application remains functional over time.
-
-For more information on how to deploy Django applications on PythonAnywhere, refer to the [official documentation](https://help.pythonanywhere.com/pages/DeployExistingDjangoProject/).
 
 ---
 
