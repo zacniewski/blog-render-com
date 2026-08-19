@@ -1,6 +1,6 @@
 # Django Blog with History Tracker for render.com
 
-This is a simple Django-based blog application that includes a custom history tracking system. It is designed to be easily deployable on [render.com](htpps://render.com).
+This is a simple Django-based blog application that includes a custom history tracking system. It is designed to be easily deployable on [Render](htpps://render.com).
 
 ## Features
 
@@ -17,7 +17,7 @@ This is a simple Django-based blog application that includes a custom history tr
 - `mysite/`: Project configuration directory (settings, URLs, WSGI/ASGI).
 - `manage.py`: Django's command-line utility.
 - `requirements.txt`: Python dependencies.
-- `render.yaml`: Configuration for deployment on [Render](https://render.com/docs/deploy-django).
+- `render.yaml`: Configuration for deployment the Django project on [Render](https://render.com/docs/deploy-django).
 - `build.sh`: Build script used by Render for environment setup.
 
 ---
