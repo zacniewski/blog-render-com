@@ -1,6 +1,6 @@
 # Django Blog with History Tracker for render.com
 
-This is a simple Django-based blog application that includes a custom history tracking system. It is designed to be easily deployable on **Render.com**.
+This is a simple Django-based blog application that includes a custom history tracking system. It is designed to be easily deployable on **[render.com](htpps://render.com)**.
 
 ## Features
 
