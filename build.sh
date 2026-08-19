@@ -11,4 +11,5 @@ python manage.py collectstatic --no-input
 # Apply any outstanding database migrations
 python manage.py migrate
 
-python manage.py shell -c "from django.contrib.auth.models import User; User.objects.create_superuser('admin1', 'admin@meant4.com', 'admin123')"
+# Create superuser (it's not recommended version of doing this, but this repo has educational purposes)
+python manage.py shell -c "from django.contrib.auth.models import User; User.objects.create_superuser('admin1', 'admin@example.com', 'admin123')"
